@@ -47,3 +47,5 @@ htmlcov/
 
 # Screenshots (optional - remove if you want to track them)
 screenshot*.png
+*.uid
+temp_extract/
