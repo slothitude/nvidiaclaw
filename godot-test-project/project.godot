@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 
 AIChat="*res://addons/ai_chat/ai_chat.gd"
 AgentStudio="*res://addons/agent_studio/agent_studio.gd"
+BackendManager="*res://backend_manager.gd"
 
 [display]
 

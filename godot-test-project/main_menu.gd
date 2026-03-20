@@ -33,6 +33,10 @@ var _chat_input: TextEdit
 var _chat_messages: VBoxContainer
 var _agent_option: OptionButton
 
+# Backend status references
+var _backend_dot: ColorRect
+var _backend_label: Label
+
 # Connection state
 var _is_connected: bool = false
 
@@ -54,6 +58,36 @@ func _connect_aichat_signals() -> void:
 		print("[MainMenu] Signals connected successfully")
 	else:
 		print("[MainMenu] ERROR: AIChat is null!")
+
+	# Connect to BackendManager signals
+	if BackendManager:
+		BackendManager.status_changed.connect(_on_backend_status_changed)
+		print("[MainMenu] BackendManager signals connected")
+
+
+func _on_backend_status_changed(running: bool, message: String) -> void:
+	print("[MainMenu] Backend status changed: ", running, " - ", message)
+	status_label.text = message
+
+	# Update backend status UI
+	if _backend_dot:
+		if running:
+			_backend_dot.color = Color(0.3, 0.8, 0.4, 1)  # Green
+		else:
+			_backend_dot.color = Color(0.9, 0.3, 0.3, 1)  # Red
+
+	if _backend_label:
+		_backend_label.text = message
+
+
+func _update_backend_status() -> void:
+	print("[MainMenu] Checking backend status...")
+	if BackendManager:
+		var running := BackendManager.is_running
+		var message := "Running" if running else "Stopped"
+		_on_backend_status_changed(running, message)
+	else:
+		_on_backend_status_changed(false, "BackendManager not found")
 
 
 func _on_aichat_connection_changed(connected: bool) -> void:
@@ -491,19 +525,66 @@ func _show_settings() -> void:
 	cli_section.add_child(_ai_cli_option)
 	panel.add_child(cli_section)
 
-	# Buttons
+	# Backend Status Section
+	var backend_section := VBoxContainer.new()
+	var backend_title := Label.new()
+	backend_title.text = "Backend Status"
+	backend_title.add_theme_font_size_override("font_size", 14)
+	backend_section.add_child(backend_title)
+
+	var backend_status := HBoxContainer.new()
+	backend_status.add_theme_constant_override("separation", 10)
+
+	_backend_dot = ColorRect.new()
+	_backend_dot.custom_minimum_size = Vector2(12, 12)
+	_backend_dot.color = Color(0.9, 0.3, 0.3, 1)  # Red initially
+	backend_status.add_child(_backend_dot)
+
+	_backend_label = Label.new()
+	_backend_label.text = "Checking..."
+	backend_status.add_child(_backend_label)
+	backend_section.add_child(backend_status)
+
+	var backend_btn_container := HBoxContainer.new()
+	backend_btn_container.add_theme_constant_override("separation", 10)
+
+	var start_btn := Button.new()
+	start_btn.text = "Start"
+	start_btn.custom_minimum_size = Vector2(80, 35)
+	start_btn.pressed.connect(_on_start_backend)
+	backend_btn_container.add_child(start_btn)
+
+	var stop_btn := Button.new()
+	stop_btn.text = "Stop"
+	stop_btn.custom_minimum_size = Vector2(80, 35)
+	stop_btn.pressed.connect(_on_stop_backend)
+	backend_btn_container.add_child(stop_btn)
+
+	var restart_btn := Button.new()
+	restart_btn.text = "Restart"
+	restart_btn.custom_minimum_size = Vector2(80, 35)
+	restart_btn.pressed.connect(_on_restart_backend)
+	backend_btn_container.add_child(restart_btn)
+
+	backend_section.add_child(backend_btn_container)
+	panel.add_child(backend_section)
+
+	# Check backend status now
+	_update_backend_status()
+
+	# SSH Connection Buttons
 	var btn_container := HBoxContainer.new()
 	btn_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	btn_container.add_theme_constant_override("separation", 20)
 
 	var connect_btn := Button.new()
-	connect_btn.text = "Connect"
+	connect_btn.text = "SSH Connect"
 	connect_btn.custom_minimum_size = Vector2(150, 50)
 	connect_btn.pressed.connect(_on_connect)
 	btn_container.add_child(connect_btn)
 
 	var disconnect_btn := Button.new()
-	disconnect_btn.text = "Disconnect"
+	disconnect_btn.text = "SSH Disconnect"
 	disconnect_btn.custom_minimum_size = Vector2(150, 50)
 	disconnect_btn.pressed.connect(_on_disconnect)
 	btn_container.add_child(disconnect_btn)
@@ -542,6 +623,27 @@ func _on_disconnect() -> void:
 		AIChat.disconnect_from_server()
 	_update_connection_status(false)
 	status_label.text = "Disconnected"
+
+
+func _on_start_backend() -> void:
+	print("[MainMenu] Starting backend...")
+	status_label.text = "Starting backend..."
+	if BackendManager:
+		BackendManager.start_backend()
+
+
+func _on_stop_backend() -> void:
+	print("[MainMenu] Stopping backend...")
+	status_label.text = "Stopping backend..."
+	if BackendManager:
+		BackendManager.stop_backend()
+
+
+func _on_restart_backend() -> void:
+	print("[MainMenu] Restarting backend...")
+	status_label.text = "Restarting backend..."
+	if BackendManager:
+		BackendManager.restart_backend()
 
 
 # === Tab Button Handlers ===
