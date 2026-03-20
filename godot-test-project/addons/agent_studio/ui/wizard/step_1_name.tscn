@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://bstep1name001"]
+
+[ext_resource type="Script" path="res://addons/agent_studio/ui/wizard/step_1_name.gd" id="1_step"]
+
+[node name="Step1Name" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_step")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Agent Name:"
+
+[node name="NameEdit" type="LineEdit" parent="VBox"]
+layout_mode = 2
+placeholder_text = "e.g., Code Reviewer"
+
+[node name="DescLabel" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Description:"
+
+[node name="DescEdit" type="TextEdit" parent="VBox"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Describe what this agent does..."
+
+[node name="IconLabel" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Choose an Icon:"
+
+[node name="IconGrid" type="GridContainer" parent="VBox"]
+layout_mode = 2
+columns = 6

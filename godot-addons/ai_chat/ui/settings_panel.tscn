@@ -1,0 +1,136 @@
+[gd_scene load_steps=1 format=3 uid=1]
+
+[node name="SettingsPanel" type="Control"]
+[ext_resource type="Script" path="res://settings_panel.gd" id=1"]
+[node name="VBox" type="VBoxContainer" parent="."]
+[node name="Title" type="Label" parent="VBox"]
+[node name="ServerGroup" type="VBoxContainer" parent="VBox"]
+[node name="BridgeUrlLabel" type="Label" parent="VBox/ServerGroup"]
+[node name="BridgeUrlInput" type="LineEdit" parent="VBox/ServerGroup"]
+[node name="HostLabel" type="Label" parent="VBox/ServerGroup"]
+[node name="HostInput" type="LineEdit" parent="VBox/ServerGroup"]
+[node name="UsernameLabel" type="Label" parent="VBox/ServerGroup"]
+[node name="UsernameInput" type="LineEdit" parent="VBox/ServerGroup"]
+[node name="SSHKeyLabel" type="Label" parent="VBox/ServerGroup"]
+[node name="SSHKeyHBox" type="HBoxContainer" parent="VBox/ServerGroup"]
+[node name="SSHKeyPathInput" type="LineEdit" parent="VBox/ServerGroup/SSHKeyHBox"]
+[node name="BrowseKeyButton" type="Button" parent="VBox/ServerGroup/SSHKeyHBox"]
+[node name="AICLILabel" type="Label" parent="VBox/ServerGroup"]
+[node name="AICLIOption" type="OptionButton" parent="VBox/ServerGroup"]
+[node name="OptionsGroup" type="VBoxContainer" parent="VBox"]
+[node name="StreamingCheck" type="CheckBox" parent="VBox/OptionsGroup"]
+[node name="MaxHistoryLabel" type="Label" parent="VBox/OptionsGroup"]
+[node name="MaxHistorySpin" type="SpinBox" parent="VBox/OptionsGroup"]
+[node name="Buttons" type="HBoxContainer" parent="VBox"]
+[node name="SaveButton" type="Button" parent="VBox/Buttons"]
+[node name="CancelButton" type="Button" parent="VBox/Buttons"]
+[node name="TestConnectionButton" type="Button" parent="VBox/Buttons"]
+[node name="Status" type="HBoxContainer" parent="VBox"]
+[node name="StatusLabel" type="Label" parent="VBox/Status"]
+
+[editable]
+
+[node name="SettingsPanel" index="0"]
+layout_mode = 2
+anchors_preset = 15
+script = ExtResource("1")
+
+[node name="VBox" index="1"]
+layout_mode = 1
+anchors_preset = 15
+
+[node name="Title" index="2"]
+layout_mode = 2
+text = "AI Chat Settings"
+
+[node name="ServerGroup" index="3"]
+layout_mode = 2
+
+[node name="BridgeUrlLabel" index="4"]
+layout_mode = 2
+text = "Bridge URL:"
+
+[node name="BridgeUrlInput" index="5"]
+layout_mode = 2
+text = "http://localhost:8000"
+placeholder_text = "http://localhost:8000"
+
+[node name="HostLabel" index="6"]
+layout_mode = 2
+text = "Default Host:"
+
+[node name="HostInput" index="7"]
+layout_mode = 2
+placeholder_text = "192.168.1.100"
+
+[node name="UsernameLabel" index="8"]
+layout_mode = 2
+text = "Username:"
+
+[node name="UsernameInput" index="9"]
+layout_mode = 2
+placeholder_text = "user"
+
+[node name="SSHKeyLabel" index="10"]
+layout_mode = 2
+text = "SSH Key Path:"
+
+[node name="SSHKeyHBox" index="11"]
+layout_mode = 2
+
+[node name="SSHKeyPathInput" index="12"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "~/.ssh/id_rsa"
+
+[node name="BrowseKeyButton" index="13"]
+layout_mode = 2
+text = "Browse"
+
+[node name="AICLILabel" index="14"]
+layout_mode = 2
+text = "Preferred AI CLI:"
+
+[node name="AICLIOption" index="15"]
+layout_mode = 2
+
+[node name="OptionsGroup" index="16"]
+layout_mode = 2
+
+[node name="StreamingCheck" index="17"]
+layout_mode = 2
+text = "Enable streaming responses"
+button_pressed = true
+
+[node name="MaxHistoryLabel" index="18"]
+layout_mode = 2
+text = "Max history messages:"
+
+[node name="MaxHistorySpin" index="19"]
+layout_mode = 2
+value = 100.0
+min_value = 10.0
+max_value = 1000.0
+step = 10.0
+
+[node name="Buttons" index="20"]
+layout_mode = 2
+
+[node name="SaveButton" index="21"]
+layout_mode = 2
+text = "Save"
+
+[node name="CancelButton" index="22"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="TestConnectionButton" index="23"]
+layout_mode = 2
+text = "Test Connection"
+
+[node name="Status" index="24"]
+layout_mode = 2
+
+[node name="StatusLabel" index="25"]
+layout_mode = 2
+text = ""

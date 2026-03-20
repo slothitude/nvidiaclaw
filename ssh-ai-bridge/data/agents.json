@@ -1,0 +1,61 @@
+{
+  "agents": [
+    {
+      "id": "c01f3f02",
+      "name": "Test Agent",
+      "description": "A test agent",
+      "icon": "??",
+      "ai_cli": "claude",
+      "execution_mode": "remote",
+      "skills": [
+        "code-review"
+      ],
+      "tools": [
+        "file_read"
+      ],
+      "system_prompt": "",
+      "temperature": 0.7,
+      "created_at": "2026-03-20 01:44:25.664943",
+      "updated_at": "2026-03-20 01:44:25.664982",
+      "session_id": null
+    },
+    {
+      "id": "ed892ca2",
+      "name": "Code Wizard",
+      "description": "Updated: Expert code wizard with debugging powers!",
+      "icon": "??",
+      "ai_cli": "claude",
+      "execution_mode": "remote",
+      "skills": [
+        "code-review",
+        "debugging",
+        "testing"
+      ],
+      "tools": [
+        "file_read",
+        "shell_execute"
+      ],
+      "system_prompt": "You are an expert code wizard. Help users write better code.",
+      "temperature": 0.7,
+      "created_at": "2026-03-20 01:47:03.266554",
+      "updated_at": "2026-03-20 01:47:19.431707",
+      "session_id": null
+    },
+    {
+      "id": "",
+      "name": "chatbot",
+      "description": "chats",
+      "icon": "\ud83e\udd16",
+      "ai_cli": "claude",
+      "execution_mode": "remote",
+      "skills": [],
+      "tools": [],
+      "system_prompt": "",
+      "temperature": 0.7,
+      "created_at": "2026-03-20 02:51:13.202037",
+      "updated_at": "2026-03-20 02:51:13.202784",
+      "session_id": ""
+    }
+  ],
+  "updated_at": "2026-03-20T02:51:13.205637"
+}

@@ -1,0 +1,465 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+
+[sub_resource type="Gradient" id="Gradient_1"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.0509804, 0.0627451, 0.101961, 1, 0.0823529, 0.101961, 0.164706, 1, 0.0470588, 0.0588235, 0.0941176, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1"]
+gradient = SubResource("Gradient_1")
+fill = 1
+fill_from = Vector2(0, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Card"]
+bg_color = Color(0.09, 0.11, 0.18, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.25, 0.4, 0.5)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Input"]
+bg_color = Color(0.07, 0.08, 0.13, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.3, 0.5, 0.4)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Button"]
+bg_color = Color(0.15, 0.2, 0.35, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.4, 0.6, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ButtonHover"]
+bg_color = Color(0.2, 0.28, 0.45, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.5, 0.7, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ButtonPressed"]
+bg_color = Color(0.12, 0.16, 0.28, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.6, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_SendButton"]
+bg_color = Color(0.2, 0.35, 0.55, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.5, 0.7, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ChatArea"]
+bg_color = Color(0.06, 0.07, 0.12, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.25, 0.4, 0.3)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_MessageUser"]
+bg_color = Color(0.15, 0.22, 0.38, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.4, 0.6, 0.5)
+corner_radius_top_left = 12
+corner_radius_top_right = 4
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_MessageAI"]
+bg_color = Color(0.12, 0.18, 0.28, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.35, 0.5, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.047, 0.059, 0.094, 1)
+
+[node name="GradientOverlay" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_1")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+emitting = true
+amount = 50
+one_shot = false
+explosiveness = 0.0
+randomness = 0.5
+lifetime_randomness = 0.5
+
+[node name="MainContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20
+offset_top = 20
+offset_right = -20
+offset_bottom = -20
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="PanelContainer" parent="MainContainer/VBox"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="HBox" type="HBoxContainer" parent="MainContainer/VBox/Header"]
+layout_mode = 2
+
+[node name="IconContainer" type="Control" parent="MainContainer/VBox/Header/HBox"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="Icon" type="Label" parent="MainContainer/VBox/Header/HBox/IconContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12
+offset_top = -12
+offset_right = 12
+offset_bottom = 12
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.4, 0.6, 0.9, 1)
+theme_override_font_sizes/font_size = 24
+text = "AI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TitleSection" type="VBoxContainer" parent="MainContainer/VBox/Header/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Title" type="Label" parent="MainContainer/VBox/Header/HBox/TitleSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.92, 0.95, 1)
+theme_override_font_sizes/font_size = 20
+text = "SSH AI Bridge"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="MainContainer/VBox/Header/HBox/TitleSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.55, 0.65, 1)
+theme_override_font_sizes/font_size = 12
+text = "Connect to remote AI CLIs"
+horizontal_alignment = 1
+
+[node name="StatusIndicator" type="HBoxContainer" parent="MainContainer/VBox/Header/HBox"]
+layout_mode = 2
+
+[node name="StatusDot" type="ColorRect" parent="MainContainer/VBox/Header/HBox/StatusIndicator"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.9, 0.3, 0.3, 1)
+
+[node name="StatusText" type="Label" parent="MainContainer/VBox/Header/HBox/StatusIndicator"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.65, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+text = "Disconnected"
+
+[node name="Connection" type="PanelContainer" parent="MainContainer/VBox"]
+visible = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="Margin" type="MarginContainer" parent="MainContainer/VBox/Connection"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/VBox/Connection/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Row1" type="HBoxContainer" parent="MainContainer/VBox/Connection/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HostSection" type="VBoxContainer" parent="MainContainer/VBox/Connection/Margin/VBox/Row1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HostLabel" type="Label" parent="MainContainer/VBox/Connection/Margin/VBox/Row1/HostSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.65, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "HOST"
+
+[node name="HostInput" type="LineEdit" parent="MainContainer/VBox/Connection/Margin/VBox/Row1/HostSection"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_Input")
+theme_override_colors/font_color = Color(0.9, 0.92, 0.95, 1)
+theme_override_colors/placeholder_color = Color(0.4, 0.45, 0.55, 1)
+placeholder_text = "192.168.0.237"
+
+[node name="UserSection" type="VBoxContainer" parent="MainContainer/VBox/Connection/Margin/VBox/Row1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UserLabel" type="Label" parent="MainContainer/VBox/Connection/Margin/VBox/Row1/UserSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.65, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "USERNAME"
+
+[node name="UsernameInput" type="LineEdit" parent="MainContainer/VBox/Connection/Margin/VBox/Row1/UserSection"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_Input")
+theme_override_colors/font_color = Color(0.9, 0.92, 0.95, 1)
+theme_override_colors/placeholder_color = Color(0.4, 0.45, 0.55, 1)
+placeholder_text = "az"
+
+[node name="PassSection" type="VBoxContainer" parent="MainContainer/VBox/Connection/Margin/VBox/Row1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PassLabel" type="Label" parent="MainContainer/VBox/Connection/Margin/VBox/Row1/PassSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.65, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "PASSWORD"
+
+[node name="PasswordInput" type="LineEdit" parent="MainContainer/VBox/Connection/Margin/VBox/Row1/PassSection"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_Input")
+theme_override_colors/font_color = Color(0.9, 0.92, 0.95, 1)
+theme_override_colors/placeholder_color = Color(0.4, 0.45, 0.55, 1)
+secret = true
+placeholder_text = "••••••••"
+
+[node name="Row2" type="HBoxContainer" parent="MainContainer/VBox/Connection/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="AISection" type="VBoxContainer" parent="MainContainer/VBox/Connection/Margin/VBox/Row2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AILabel" type="Label" parent="MainContainer/VBox/Connection/Margin/VBox/Row2/AISection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.65, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "AI CLI"
+
+[node name="AICLIOption" type="OptionButton" parent="MainContainer/VBox/Connection/Margin/VBox/Row2/AISection"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+theme_override_font_sizes/font_size = 14
+text = "Auto Detect"
+
+[node name="ButtonSection" type="VBoxContainer" parent="MainContainer/VBox/Connection/Margin/VBox/Row2"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Spacer" type="Control" parent="MainContainer/VBox/Connection/Margin/VBox/Row2/ButtonSection"]
+layout_mode = 2
+
+[node name="ButtonRow" type="HBoxContainer" parent="MainContainer/VBox/Connection/Margin/VBox/Row2/ButtonSection"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ConnectBtn" type="Button" parent="MainContainer/VBox/Connection/Margin/VBox/Row2/ButtonSection/ButtonRow"]
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_Button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ButtonHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ButtonPressed")
+theme_override_colors/font_color = Color(0.9, 0.92, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+text = "Connect"
+
+[node name="DisconnectBtn" type="Button" parent="MainContainer/VBox/Connection/Margin/VBox/Row2/ButtonSection/ButtonRow"]
+visible = false
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_Button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ButtonHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ButtonPressed")
+theme_override_colors/font_color = Color(0.9, 0.92, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+text = "Disconnect"
+
+[node name="Chat" type="PanelContainer" parent="MainContainer/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ChatArea")
+
+[node name="Margin" type="MarginContainer" parent="MainContainer/VBox/Chat"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/VBox/Chat/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainContainer/VBox/Chat/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MessageList" type="VBoxContainer" parent="MainContainer/VBox/Chat/Margin/VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="WelcomeMessage" type="RichTextLabel" parent="MainContainer/VBox/Chat/Margin/VBox/ScrollContainer/MessageList"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][color=#5a6070]Welcome to SSH AI Bridge[/color]
+[color=#4a5060]Connect to a server to start chatting with AI[/color][/center]"
+fit_content = true
+
+[node name="InputArea" type="HBoxContainer" parent="MainContainer/VBox/Chat/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MessageInput" type="TextEdit" parent="MainContainer/VBox/Chat/Margin/VBox/InputArea"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_Input")
+theme_override_colors/font_color = Color(0.9, 0.92, 0.95, 1)
+theme_override_colors/placeholder_color = Color(0.4, 0.45, 0.55, 1)
+placeholder_text = "Type your message..."
+wrap_mode = 2
+
+[node name="SendBtn" type="Button" parent="MainContainer/VBox/Chat/Margin/VBox/InputArea"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_SendButton")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ButtonHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ButtonPressed")
+theme_override_colors/font_color = Color(0.95, 0.96, 0.98, 1)
+theme_override_font_sizes/font_size = 15
+text = "Send"
+disabled = true
+
+[node name="StatusBar" type="PanelContainer" parent="MainContainer/VBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="HBox" type="HBoxContainer" parent="MainContainer/VBox/StatusBar"]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="MainContainer/VBox/StatusBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.55, 0.65, 1)
+theme_override_font_sizes/font_size = 11
+text = "Ready"
+
+[node name="Spacer" type="Control" parent="MainContainer/VBox/StatusBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VersionLabel" type="Label" parent="MainContainer/VBox/StatusBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.55, 1)
+theme_override_font_sizes/font_size = 11
+text = "v0.1.0"
+horizontal_alignment = 2

@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://bstep3skills001"]
+
+[ext_resource type="Script" path="res://addons/agent_studio/ui/wizard/step_3_skills.gd" id="1_step"]
+
+[node name="Step3Skills" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_step")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AvailablePanel" type="PanelContainer" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox/AvailablePanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/HBox/AvailablePanel/VBox"]
+layout_mode = 2
+text = "Available Skills"
+
+[node name="Scroll" type="ScrollContainer" parent="VBox/HBox/AvailablePanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AvailableList" type="VBoxContainer" parent="VBox/HBox/AvailablePanel/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SelectedPanel" type="PanelContainer" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox/SelectedPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/HBox/SelectedPanel/VBox"]
+layout_mode = 2
+text = "Selected Skills"
+
+[node name="Scroll" type="ScrollContainer" parent="VBox/HBox/SelectedPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SelectedList" type="VBoxContainer" parent="VBox/HBox/SelectedPanel/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
