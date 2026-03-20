@@ -454,8 +454,14 @@ func _show_settings() -> void:
 	_clear_content()
 	status_label.text = "Configure SSH connection"
 
+	# Wrap in ScrollContainer for overflow
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
 	var panel := VBoxContainer.new()
 	panel.add_theme_constant_override("separation", 15)
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	# Title
 	var title := Label.new()
@@ -591,8 +597,9 @@ func _show_settings() -> void:
 
 	panel.add_child(btn_container)
 
-	content.add_child(panel)
-	_current_panel = panel
+	scroll.add_child(panel)
+	content.add_child(scroll)
+	_current_panel = scroll
 
 
 func _on_connect() -> void:

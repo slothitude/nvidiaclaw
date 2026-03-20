@@ -87,26 +87,12 @@ func start_backend() -> void:
 
 	status_changed.emit(false, "Starting backend...")
 
-	# Start the backend process using OS.create_process (non-blocking)
-	# Use start /B to run in background
-	var args := PackedStringArray([
-		"/c",
-		"start",
-		"/B",
-		"cmd",
-		"/c",
-		"cd",
-		BACKEND_DIR,
-		"&&",
-		"python",
-		"-m",
-		"uvicorn",
-		"main:app",
-		"--host",
-		"127.0.0.1",
-		"--port",
-		"8000"
-	])
+	# Use the batch file to start the backend
+	var batch_path := "res://start_backend.bat"
+	var absolute_path := ProjectSettings.globalize_path(batch_path)
+
+	# Run the batch file in background using cmd
+	var args := PackedStringArray(["/c", "start", "/B", absolute_path])
 	var pid := OS.create_process("cmd", args, false)
 
 	print("[BackendManager] Started process with PID: ", pid)
@@ -116,8 +102,7 @@ func start_backend() -> void:
 		status_changed.emit(false, "Failed to start backend")
 		return
 
-	# The status will be updated by the periodic check timer
-	# Just return immediately - don't block
+	# Status will be updated by periodic check
 
 
 ## Stop the backend
