@@ -1,0 +1,67 @@
+{
+  "id": "settings_screen",
+  "dsl_version": "1.0",
+  "layout": "vbox",
+  "transition": "slide_left",
+  "elements": [
+    {
+      "type": "label",
+      "id": "heading",
+      "text": "Settings",
+      "align": "center"
+    },
+    {
+      "type": "label",
+      "id": "volume_label",
+      "text": "Master volume",
+      "bind": "volume_display"
+    },
+    {
+      "type": "slider",
+      "id": "volume_slider",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "value": 80,
+      "bind_write": "volume"
+    },
+    {
+      "type": "label",
+      "id": "name_label",
+      "text": "Player name"
+    },
+    {
+      "type": "input",
+      "id": "player_name_input",
+      "placeholder": "Enter name...",
+      "max_length": 24,
+      "bind_write": "player_name"
+    },
+    {
+      "type": "container",
+      "id": "button_row",
+      "layout": "hbox",
+      "children": [
+        {
+          "type": "button",
+          "id": "btn_save",
+          "text": "Save",
+          "action": "agent:save_settings",
+          "payload": {}
+        },
+        {
+          "type": "button",
+          "id": "btn_cancel",
+          "text": "Cancel",
+          "action": "sys:navigate",
+          "payload": { "target": "main_menu" }
+        }
+      ]
+    },
+    {
+      "type": "progress",
+      "id": "save_progress",
+      "bind": "save_progress_value"
+    }
+  ]
+}

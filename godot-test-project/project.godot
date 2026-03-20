@@ -22,6 +22,16 @@ config/icon="res://icon.svg"
 AIChat="*res://addons/ai_chat/ai_chat.gd"
 AgentStudio="*res://addons/agent_studio/agent_studio.gd"
 BackendManager="*res://backend_manager.gd"
+#LLMUIOSautoloads(ordermattersfordependencies)ComponentFactory="*res://addons/llm_ui_os/core/component_factory.gd"
+NodePool="*res://addons/llm_ui_os/core/node_pool.gd"
+DiffEngine="*res://addons/llm_ui_os/core/diff_engine.gd"
+SchemaValidator="*res://addons/llm_ui_os/core/schema_validator.gd"
+StateManager="*res://addons/llm_ui_os/autoload/state_manager.gd"
+ActionRouter="*res://addons/llm_ui_os/autoload/action_router.gd"
+TransitionManager="*res://addons/llm_ui_os/autoload/transition_manager.gd"
+DebugOverlay="*res://addons/llm_ui_os/autoload/debug_overlay.gd"
+AgentBridge="*res://addons/llm_ui_os/autoload/agent_bridge.gd"
+UIManager="*res://addons/llm_ui_os/autoload/ui_manager.gd"
 
 [display]
 
@@ -32,7 +42,3 @@ window/stretch/mode="canvas_items"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/agent_studio/plugin.cfg")
-
-[rendering]
-
-renderer/rendering_method="forward_plus"

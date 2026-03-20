@@ -1,0 +1,27 @@
+{
+  "id": "fallback",
+  "dsl_version": "1.0",
+  "layout": "vbox",
+  "transition": "fade",
+  "elements": [
+    {
+      "type": "label",
+      "id": "fallback_msg",
+      "text": "UI unavailable — retrying...",
+      "align": "center"
+    },
+    {
+      "type": "button",
+      "id": "fallback_retry",
+      "text": "Retry",
+      "action": "sys:refresh"
+    },
+    {
+      "type": "button",
+      "id": "fallback_home",
+      "text": "Back to main menu",
+      "action": "sys:navigate",
+      "payload": { "target": "main_menu" }
+    }
+  ]
+}

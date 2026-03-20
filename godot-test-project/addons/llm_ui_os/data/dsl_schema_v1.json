@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LLM UI OS DSL v1.0",
+  "description": "Schema for LLM-generated UI specifications",
+  "type": "object",
+  "required": ["id", "dsl_version", "elements"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique stable identifier for this UI screen"
+    },
+    "dsl_version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "DSL version for migration support"
+    },
+    "layout": {
+      "type": "string",
+      "enum": ["vbox", "hbox", "grid", "free"],
+      "default": "vbox"
+    },
+    "transition": {
+      "type": "string",
+      "enum": ["fade", "scale", "slide_left", "slide_right", "fade_scale", "instant"],
+      "default": "fade_scale"
+    },
+    "elements": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "$ref": "#/$defs/element" }
+    }
+  },
+  "$defs": {
+    "element": {
+      "type": "object",
+      "required": ["id", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable unique id for keyed diffing"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["label", "button", "slider", "input", "container", "image", "progress", "list"]
+        },
+        "text": { "type": "string" },
+        "placeholder": { "type": "string" },
+        "tooltip": { "type": "string" },
+        "disabled": { "type": "boolean", "default": false },
+        "align": { "type": "string", "enum": ["left", "center", "right"] },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "value": { "type": "number" },
+        "step": { "type": "number" },
+        "max_length": { "type": "integer", "minimum": 0 },
+        "action": {
+          "type": "string",
+          "pattern": "^(sys:|agent:).+",
+          "description": "Action string. Must be namespaced: sys:navigate, agent:ask_llm, etc."
+        },
+        "payload": {
+          "type": "object",
+          "description": "Arbitrary key-value payload passed to ActionRouter"
+        },
+        "bind": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Read-only binding to a StateManager key"
+        },
+        "bind_write": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Two-way binding to StateManager"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["vbox", "hbox"],
+          "description": "For container elements only"
+        },
+        "children": {
+          "type": "array",
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/element" },
+          "description": "Nested elements (container only). Max depth 3."
+        }
+      }
+    }
+  }
+}

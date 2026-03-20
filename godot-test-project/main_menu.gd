@@ -10,12 +10,17 @@ extends Control
 @onready var agent_studio_btn: Button = $VBox/TabBar/AgentStudioBtn
 @onready var chat_hub_btn: Button = $VBox/TabBar/ChatHubBtn
 @onready var settings_btn: Button = $VBox/TabBar/SettingsBtn
+@onready var dynamic_panel_btn: Button = $VBox/TabBar/DynamicPanelBtn
 
-# Current panel
+# Dynamic Panel (standalone window)
+var _dynamic_panel_window: Window = null
+
+# Current panel (for other tabs)
 var _current_panel: Control = null
 
 # Preload scripts
 const AgentConfigScript = preload("res://addons/agent_studio/agent_config.gd")
+const DynamicPanelScene = preload("res://dynamic_panel.tscn")
 
 # Form inputs
 var _name_input: LineEdit
@@ -158,14 +163,9 @@ func _on_send_message() -> void:
 
 
 func _add_chat_message(role: String, content: String) -> void:
-	print("[MainMenu] _add_chat_message called - role: ", role, " content: ", content.left(50))
-
+	# If not on Chat Hub tab, just show in status bar instead
 	if not _chat_messages:
-		print("[MainMenu] ERROR: _chat_messages is null!")
-		return
-
-	if not is_instance_valid(_chat_messages):
-		print("[MainMenu] ERROR: _chat_messages is not valid!")
+		status_label.text = content
 		return
 
 	print("[MainMenu] _chat_messages is valid, child count: ", _chat_messages.get_child_count())
@@ -216,6 +216,7 @@ func _connect_buttons() -> void:
 	agent_studio_btn.pressed.connect(_on_agent_studio_pressed)
 	chat_hub_btn.pressed.connect(_on_chat_hub_pressed)
 	settings_btn.pressed.connect(_on_settings_pressed)
+	dynamic_panel_btn.pressed.connect(_on_dynamic_panel_pressed)
 
 
 func _clear_content() -> void:
@@ -674,3 +675,53 @@ func _on_settings_pressed() -> void:
 	chat_hub_btn.button_pressed = false
 	settings_btn.button_pressed = true
 	_show_settings()
+
+
+# === Dynamic Panel (Standalone Window) ===
+
+func _show_dynamic_panel() -> void:
+	"""Open Dynamic Panel as a standalone window"""
+	if _dynamic_panel_window == null:
+		# Create new standalone window
+		_dynamic_panel_window = Window.new()
+		_dynamic_panel_window.title = "Dynamic UI Panel"
+		_dynamic_panel_window.initial_position = 1  # CENTER_PRIMARY_MONITOR
+		_dynamic_panel_window.size = Vector2i(400, 600)
+		_dynamic_panel_window.min_size = Vector2i(300, 400)
+		_dynamic_panel_window.unresizable = false
+
+		# Load and add the panel content
+		var scene = DynamicPanelScene
+		if scene:
+			var panel = scene.instantiate()
+			_dynamic_panel_window.add_child(panel)
+
+		# Add to scene tree
+		get_tree().root.add_child(_dynamic_panel_window)
+		_dynamic_panel_window.close_requested.connect(_on_dynamic_window_closed)
+		status_label.text = "Dynamic Panel window opened"
+	else:
+		# Window exists, just show it
+		_dynamic_panel_window.show()
+		_dynamic_panel_window.grab_focus()
+
+
+func _on_dynamic_window_closed() -> void:
+	"""Handle when window is closed"""
+	if _dynamic_panel_window:
+		_dynamic_panel_window.hide()
+		status_label.text = "Dynamic Panel window closed"
+
+
+func open_dynamic_panel() -> void:
+	"""Public method to open dynamic panel from external calls"""
+	_show_dynamic_panel()
+
+
+func _on_dynamic_panel_pressed() -> void:
+	# Update tab button states
+	agent_studio_btn.button_pressed = false
+	chat_hub_btn.button_pressed = false
+	settings_btn.button_pressed = false
+	dynamic_panel_btn.button_pressed = true
+	_show_dynamic_panel()
