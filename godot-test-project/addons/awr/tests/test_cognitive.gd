@@ -121,17 +121,18 @@ func test_global_workspace() -> void:
 	var conscious = gw.get_conscious_content()
 	assert_equal(conscious, "threat_detected", "Conscious content set correctly")
 
+	# Test broadcast (before threshold test to ensure conscious_content is set)
+	# Use array to work around GDScript closure capture issue
+	var broadcast_count = [0]
+	gw.register_listener(func(content): broadcast_count[0] += 1)
+	gw.broadcast()
+	assert_equal(broadcast_count[0], 1, "Broadcast reaches listeners")
+
 	# Test activation threshold
 	gw.activation_threshold = 0.8
 	gw.add_content("weak_signal", 0.3, "background")
 	var weak_winner = gw.compete()
 	assert_not_equal(weak_winner, "weak_signal", "Below threshold content doesn't win")
-
-	# Test broadcast
-	var broadcast_count = 0
-	gw.register_listener(func(content): broadcast_count += 1)
-	gw.broadcast()
-	assert_equal(broadcast_count, 1, "Broadcast reaches listeners")
 
 	# Test boost/inhibit
 	gw.boost_module("perception", 0.5)

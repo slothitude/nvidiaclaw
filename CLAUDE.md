@@ -57,8 +57,11 @@ pytest --cov=. --cov-report=html
 # Run headless tests (from godot-test-project directory)
 godot --headless --path . -s tests/test_ai_client.gd
 
-# Run main scene (requires GUI)
+# Run main scene (requires GUI) - currently Fantasy Town demo
 godot --path .
+
+# Open editor to import new assets
+godot --editor --path .
 ```
 
 ### AWR Tests (godot-test-project/addons/awr/)
@@ -67,10 +70,16 @@ godot --path .
 # Run all AWR tests
 godot --headless --path godot-test-project -s addons/awr/tests/run_all_tests.gd
 
-# Run specific test suite
+# Run specific test suites
 godot --headless --path godot-test-project -s addons/awr/tests/test_sim_loop.gd
 godot --headless --path godot-test-project -s addons/awr/tests/test_collision.gd
 godot --headless --path godot-test-project -s addons/awr/tests/test_gravity_slingshot.gd
+godot --headless --path godot-test-project -s addons/awr/tests/test_cognitive.gd
+godot --headless --path godot-test-project -s addons/awr/tests/test_spatial_memory.gd
+godot --headless --path godot-test-project -s addons/awr/tests/test_spatial_agents.gd
+godot --headless --path godot-test-project -s addons/awr/tests/test_self_improvement.gd
+godot --headless --path godot-test-project -s addons/awr/tests/test_causal_bus.gd
+godot --headless --path godot-test-project -s addons/awr/tests/test_perception.gd
 ```
 
 ## Architecture
@@ -175,8 +184,40 @@ Skills and tools are defined in `agents/models.py` with registries (`SkillRegist
 
 Dependencies matter in `project.godot`:
 ```
-AIChat → AgentStudio → BackendManager → AWR → llm_ui_os autoloads → AgentBridge → UIManager
+AIChat → AgentStudio → BackendManager → llm_ui_os autoloads → AgentBridge → UIManager
 ```
+
+### Fantasy Town Demo (scenes/fantasy_town/)
+
+The main scene (`fantasy_town.tscn`) is a world-breaking demo with:
+- 100+ physics-based agents with BDI cognition
+- Procedural town generation with Kenney assets
+- Spatial Memory integration for agent navigation
+
+**Asset paths:**
+```
+res://assets/kenney/fantasy-town/         # Fantasy town parts (walls, roofs, props)
+res://assets/kenney/modular-buildings/    # Complete houses and towers
+res://assets/kenney/cube-pets/            # Agent models (animals)
+```
+
+**Scale constants** (in fantasy_town.gd):
+| Element | Scale | Purpose |
+|---------|-------|---------|
+| HOUSE_SCALE | 2.0 | Buildings visible from camera |
+| TREE_SCALE | 1.5 | Natural forest feel |
+| PROP_SCALE | 1.2 | Fences, carts, decorations |
+| AGENT_SCALE | 0.6 | Small cute creatures |
+
+**Agent cognition pipeline:**
+```
+Spatial Memory → BDI Beliefs → Desires → HTN Planner → Hopping Movement
+```
+
+**Controls:**
+- F12: Screenshot capture
+- Right-drag: Rotate camera
+- Scroll: Zoom
 
 ### AWR Architecture
 
@@ -200,6 +241,33 @@ Key interfaces:
 - `WorldState.step(dt)` - Advance physics by dt seconds
 - `SimLoop.search_best(actions)` - Find optimal action via simulation
 - `Evaluator.*` - Scoring functions (goal_distance, collision_free, etc.)
+
+### Ingesting Documents into Spatial Memory
+
+Use `tools/book_to_spatial_memory.py` to convert text into navigable 3D concept space:
+
+```bash
+# Install dependencies
+pip install requests numpy scikit-learn
+
+# Ensure Ollama is running with embedding model
+ollama pull nomic-embed-text
+
+# Ingest a book
+python tools/book_to_spatial_memory.py book.txt --output memory.json
+
+# Ingest a directory (e.g., Godot docs)
+python tools/book_to_spatial_memory.py tools/godot-docs \
+    --output godot_docs_memory.json \
+    --extensions .rst,.md,.txt \
+    --chunk-size 500
+```
+
+Load in Godot:
+```gdscript
+var memory = SpatialMemory.load_from("res://godot_docs_memory.json")
+var path = memory.find_path("player", "animation")
+```
 
 ### Session Management
 

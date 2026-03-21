@@ -13,14 +13,14 @@ config_version=5
 config/name="AI Chat Test"
 config/description="Test project for SSH AI Bridge"
 config/version="0.1.0"
-run/main_scene="res://main_menu.tscn"
+run/main_scene="res://scenes/fantasy_town/fantasy_town.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 AIChat="*res://addons/ai_chat/ai_chat.gd"
-AgentStudio="*res://addons/agent_studio/agent_studio.gd"
+AgentStudio="*uid://bvlftt75wwl8"
 BackendManager="*res://backend_manager.gd"
 #LLMUIOSautoloads(ordermattersfordependencies)ComponentFactory="*res://addons/llm_ui_os/core/component_factory.gd"
 NodePool="*res://addons/llm_ui_os/core/node_pool.gd"
@@ -35,8 +35,8 @@ UIManager="*res://addons/llm_ui_os/autoload/ui_manager.gd"
 
 [display]
 
-window/size/viewport_width=800
-window/size/viewport_height=600
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
 [editor_plugins]
