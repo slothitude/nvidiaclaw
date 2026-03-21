@@ -293,3 +293,215 @@ Godot settings persist to `user://ai_settings.tres`:
 - Bridge URL (default: `http://localhost:8000`)
 - Default SSH credentials
 - Preferred AI CLI
+
+## Self-Organizing Agent Systems
+
+This section documents research patterns for autonomous agents that can create their own systems to perform real work.
+
+### Autonomous Task Decomposition
+
+Agents break high-level goals into executable subtasks:
+
+```
+Goal: "Build a web scraper"
+  ↓ Decomposition
+├── Subtask: Research scraping libraries
+├── Subtask: Install dependencies
+├── Subtask: Write scraper code
+├── Subtask: Test and debug
+└── Subtask: Deploy to production
+```
+
+**Implementation in Fantasy Town:**
+- HTN Planner decomposes goals into actions
+- BDI model tracks belief state for each subtask
+- Delegation system (Meeseeks pattern) spawns subtasks when stuck
+
+### Emergent Collaboration
+
+Agents form teams without explicit programming:
+
+1. **Proximity-based**: Agents near each other discover shared goals
+2. **Skill-based**: Agents with complementary skills find each other
+3. **Task-based**: Complex tasks require multiple agents
+
+**Example workflow:**
+```
+Agent A (has Python skill) meets Agent B (has API skill)
+→ Both need to fetch data
+→ A writes scraper, B handles API auth
+→ Emergent team formation
+```
+
+### Self-Improvement Loops
+
+Agents enhance their own capabilities:
+
+| Loop | Mechanism | Example |
+|------|-----------|---------|
+| Learning | Visit university → acquire skill | "Learn Python Scripting" |
+| Practice | Use skill → gain XP | Execute bash commands |
+| Teaching | Share knowledge with other agents | Agent teaches skill to another |
+| Tool Creation | Write code → add to toolkit | Agent creates helper script |
+
+**Implementation:**
+```gdscript
+# Skill learning loop
+func learn_skill(skill_name: String) -> void:
+    if not _skills.has(skill_name):
+        _skills[skill_name] = {"level": 1, "experience": 10}
+    else:
+        _skills[skill_name]["experience"] += 10
+        if _skills[skill_name]["experience"] >= 100:
+            _skills[skill_name]["level"] += 1
+```
+
+### MCP as Building Blocks
+
+Model Context Protocol (MCP) enables real work:
+
+| MCP Server | Capability | Fantasy Town Building |
+|------------|------------|----------------------|
+| SearXNG | Web search | Library |
+| Filesystem | Read/write files | Workshop |
+| GitHub | Code management | University |
+| PostgreSQL | Database queries | Market |
+
+**Integration pattern:**
+1. Agent visits appropriate building
+2. Building provides MCP access
+3. Agent uses MCP to perform real work
+4. Results stored in agent memory
+
+### Memory-Driven Behavior
+
+Spatial memory enables intelligent decision-making:
+
+```
+┌─────────────────────────────────────────┐
+│           SPATIAL MEMORY                 │
+├─────────────────────────────────────────┤
+│  Concepts ←→ Locations ←→ Metadata      │
+│     ↓           ↓            ↓          │
+│  Navigation   Goals      Context        │
+│     ↓           ↓            ↓          │
+│  "Where's    "Visit      "Library       │
+│   library?"  building"   has search"    │
+└─────────────────────────────────────────┘
+```
+
+**Memory queries:**
+- `find_path("self", "library")` - Navigation
+- `neighbors(position, radius)` - Nearby objects
+- `retrieve_by_concept("market")` - Known locations
+
+### Economic Systems
+
+Agents trade skills and resources:
+
+| Resource | Source | Use |
+|----------|--------|-----|
+| Energy | Rest at tavern | Powers movement |
+| Knowledge | Visit library | Enables search |
+| Skills | Visit university | Unlocks capabilities |
+| Gold | Trade at market | Buy services |
+
+**Trade protocol:**
+```
+Agent A offers: Python Scripting (Level 3)
+Agent B offers: API Integration (Level 2)
+→ Fair trade if levels match
+→ Both agents gain new capability access
+```
+
+### Code Generation
+
+Agents write their own tools:
+
+1. **Template-based**: Fill in parameters
+2. **LLM-generated**: Use Ollama for code
+3. **Iterative refinement**: Test and improve
+
+**Example - Agent creates a helper:**
+```gdscript
+# Agent requests code generation
+thought = "I need a function to parse JSON data"
+
+# Ollama generates:
+func parse_json_data(raw_text: String) -> Dictionary:
+    var json = JSON.new()
+    if json.parse(raw_text) == OK:
+        return json.data
+    return {}
+```
+
+### API Integration
+
+Agents connect to external services:
+
+| Service | Endpoint | Agent Skill Required |
+|---------|----------|---------------------|
+| SSH Bridge | `/api/v1/execute` | Bash execution |
+| SearXNG | `/search` | Web Search |
+| Ollama | `/api/generate` | (built-in) |
+| Custom APIs | Any HTTP | API Integration |
+
+**Request pattern:**
+```gdscript
+func call_api(endpoint: String, params: Dictionary) -> void:
+    var http = HTTPRequest.new()
+    add_child(http)
+    http.request_completed.connect(_on_api_response)
+    http.request(endpoint, ["Content-Type: application/json"],
+                 HTTPClient.METHOD_POST, JSON.stringify(params))
+```
+
+### Real Job Skills
+
+Agents can learn skills for actual work:
+
+| Skill Category | Skills | Real Application |
+|----------------|--------|------------------|
+| **Development** | Python, Git, Testing | Write and test code |
+| **Data** | Analysis, Visualization | Process datasets |
+| **DevOps** | Docker, CI/CD, Monitoring | Deploy services |
+| **Research** | Web Search, Summarization | Gather information |
+| **Communication** | APIs, Protocols | Integrate systems |
+| **Memory** | Enhancement, Recall | Long-term knowledge |
+
+**Learning path:**
+```
+1. Agent visits University
+2. Selects skill to learn
+3. Gains level through practice
+4. Uses skill for real work
+5. Earns rewards (XP, resources)
+6. Can teach other agents
+```
+
+### Autonomous Agent Checklist
+
+For agents to do real work independently:
+
+- [x] **Perception** - Sense environment via spatial memory
+- [x] **Reasoning** - BDI model for goal-directed behavior
+- [x] **Learning** - Skill acquisition at university
+- [x] **Memory** - Personal and shared spatial memory
+- [x] **Communication** - Speech bubbles and chat
+- [x] **Tool Use** - Bash execution, web search
+- [ ] **Planning** - Long-term goal decomposition
+- [ ] **Collaboration** - Multi-agent task sharing
+- [ ] **Reflection** - Self-evaluation and improvement
+- [ ] **Creativity** - Novel solution generation
+
+### Scaling to 1000+ Agents
+
+Key optimizations for massive scale:
+
+| Challenge | Solution |
+|-----------|----------|
+| AI generation | Batch requests (10 at a time) |
+| Physics | Spatial hashing O(n) collisions |
+| Memory | Hierarchical LOD for distant agents |
+| Rendering | GPU instancing for similar models |
+| State sync | Delta compression for networking |

@@ -138,6 +138,44 @@ AWR.build_spiral_palace(topics)
 | `save_memory(path)` | Persist to file |
 | `load_memory(path)` | Load from file |
 
+### Ingesting Books/Documents
+
+Use `tools/book_to_spatial_memory.py` to convert any text into navigable 3D concept space:
+
+```bash
+# Install dependencies
+pip install requests numpy scikit-learn
+
+# Ensure Ollama is running with nomic-embed-text
+ollama pull nomic-embed-text
+
+# Ingest a book
+python tools/book_to_spatial_memory.py book.txt --output memory.json
+
+# Ingest a directory (e.g., Godot docs)
+python tools/book_to_spatial_memory.py tools/godot-docs \
+    --output godot_docs_memory.json \
+    --extensions .rst,.md,.txt \
+    --chunk-size 500
+
+# With limits for testing
+python tools/book_to_spatial_memory.py docs/ --output test.json --max-files 10 --limit 50
+```
+
+**Output format** is compatible with `SpatialMemory.load_from()`:
+
+```gdscript
+# Load the generated memory
+var memory = SpatialMemory.load_from("res://godot_docs_memory.json")
+
+# Find related concepts
+var path = memory.find_path("player", "animation")
+var concepts = memory.concepts_along_path(path)
+
+# Query by location
+var nearby = memory.neighbors(Vector3(500, 300, 200), 50.0)
+```
+
 ---
 
 ## v0.3: AGI Patterns (Meeseeks Integration)
@@ -449,7 +487,7 @@ godot --headless --path godot-test-project -s addons/awr/tests/test_self_improve
 |--------|-------|
 | Branches/second | ~519 (CPU-only) |
 | Latency per branch | ~1.93ms |
-| Test coverage | 91+ tests passing |
+| Test coverage | 231+ tests passing |
 | Determinism | 100% verified |
 | AGI Patterns | 7 patterns implemented |
 

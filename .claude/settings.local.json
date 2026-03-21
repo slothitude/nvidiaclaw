@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"C:\\\\Users\\\\aaron\\\\Godot\\\\godot.bat\" --headless --path . -s addons/awr/tests/run_all_tests.gd)",
+      "WebSearch"
+    ]
+  }
+}
