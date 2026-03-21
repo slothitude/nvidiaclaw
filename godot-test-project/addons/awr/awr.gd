@@ -21,6 +21,11 @@ const VLMParserScript = preload("res://addons/awr/perception/vlm_parser.gd")
 const ViewportCaptureScript = preload("res://addons/awr/perception/viewport_capture.gd")
 const SceneGeneratorScript = preload("res://addons/awr/worldgen/scene_generator.gd")
 const RealBridgeScript = preload("res://addons/awr/realbridge/mqtt_client.gd")
+const SpatialMemoryScript = preload("res://addons/awr/spatial/spatial_memory.gd")
+const MemoryNodeScript = preload("res://addons/awr/spatial/memory_node.gd")
+const SpatialPathScript = preload("res://addons/awr/spatial/spatial_path.gd")
+const SpatialIndexScript = preload("res://addons/awr/spatial/spatial_index.gd")
+const PalaceBuilderScript = preload("res://addons/awr/spatial/palace_builder.gd")
 
 ## Core components
 var _world: Variant = null
@@ -30,6 +35,7 @@ var _event_log: Variant = null
 var _perception: Variant = null
 var _real_bridge: Variant = null
 var _scene_gen: Variant = null
+var _spatial_memory: Variant = null
 
 ## Configuration
 var config: Dictionary = {
@@ -319,3 +325,71 @@ func psc_cycle(viewport: Viewport, actions: Array, eval_func: Callable) -> Dicti
 func _log(message: String) -> void:
 	if config.debug:
 		print("[AWR] %s" % message)
+
+# ============================================================
+# SPATIAL MEMORY API (v0.2)
+# ============================================================
+
+## Get or create the spatial memory engine
+func get_spatial_memory(cell_size: float = 10.0) -> Variant:
+	if _spatial_memory == null:
+		_spatial_memory = SpatialMemoryScript.new(cell_size)
+	return _spatial_memory
+
+## Create a new spatial memory palace
+func create_memory_palace(cell_size: float = 10.0) -> Variant:
+	return SpatialMemoryScript.new(cell_size)
+
+## Store a concept in spatial memory
+func memorize(concept: String, location: Vector3, metadata: Dictionary = {}) -> Variant:
+	return get_spatial_memory().store(concept, location, metadata)
+
+## Retrieve a concept from spatial memory
+func recall(location: Vector3) -> Variant:
+	return get_spatial_memory().retrieve(location)
+
+## Recall a concept by name
+func recall_by_concept(concept: String) -> Variant:
+	return get_spatial_memory().retrieve_by_concept(concept)
+
+## Find spatial path between two concepts (REASONING!)
+func spatial_reason(from_concept: String, to_concept: String) -> Variant:
+	return get_spatial_memory().find_path(from_concept, to_concept)
+
+## Get concepts along a path (THE ANSWER!)
+func concepts_on_path(path: Variant) -> Array:
+	if path == null:
+		return []
+	return path.get_discovered_concepts()
+
+## Calculate semantic distance between concepts
+func semantic_distance(concept_a: String, concept_b: String) -> float:
+	return get_spatial_memory().semantic_distance(concept_a, concept_b)
+
+## Find neighbors of a concept
+func concept_neighbors(concept: String, radius: float) -> Array:
+	return get_spatial_memory().neighborhood(concept, radius)
+
+## Build a memory palace from concepts
+func build_palace(concepts: Array[Dictionary]) -> Variant:
+	var builder = PalaceBuilderScript.new(get_spatial_memory())
+	return builder.build(concepts)
+
+## Build a linear memory palace (sequences/stories)
+func build_linear_palace(concepts: Array[String], start: Vector3 = Vector3.ZERO) -> Variant:
+	var builder = PalaceBuilderScript.new(get_spatial_memory())
+	return builder.build_linear(concepts, start)
+
+## Build a spiral memory palace (exploration)
+func build_spiral_palace(concepts: Array[String], center: Vector3 = Vector3.ZERO) -> Variant:
+	var builder = PalaceBuilderScript.new(get_spatial_memory())
+	return builder.build_spiral(concepts, center)
+
+## Save spatial memory to file
+func save_memory(path: String) -> int:
+	return get_spatial_memory().save(path)
+
+## Load spatial memory from file
+func load_memory(path: String) -> Variant:
+	_spatial_memory = SpatialMemoryScript.load_from(path)
+	return _spatial_memory

@@ -15,7 +15,8 @@ func _init():
 		"res://addons/awr/tests/test_sim_loop.gd",
 		"res://addons/awr/tests/test_collision.gd",
 		"res://addons/awr/tests/test_causal_bus.gd",
-		"res://addons/awr/tests/test_perception.gd"
+		"res://addons/awr/tests/test_perception.gd",
+		"res://addons/awr/tests/test_spatial_memory.gd"
 	]
 
 	for test_file in test_files:

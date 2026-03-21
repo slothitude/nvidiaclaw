@@ -18,6 +18,7 @@ LLMs fail because they don't have a world to think inside. They discuss physics 
 - **Fast** - 519+ branches/second for parallel world simulation
 - **Open-source** - MIT licensed, no cloud dependency
 - **Local-first** - Everything runs on your machine
+- **Spatial Memory** - v0.2 introduces the first AI memory system based on cognitive maps
 
 ## Installation
 
@@ -57,6 +58,86 @@ var result = AWR.simulate_best(world, actions, {
 print("Best action: ", result.action)
 print("Score: ", result.score)
 ```
+
+---
+
+## v0.2: Spatial Memory Engine
+
+**The first AI memory system based on cognitive maps.**
+
+Based on:
+- **Method of Loci** (Memory Palace) - 2000+ year old technique
+- **Cognitive Maps** - Nobel Prize 2014 (O'Keefe, Moser & Moser)
+
+The key insight: "The nothing that surrounds objects IS the memory structure."
+
+| Current AI Memory | Spatial Memory (AWR) |
+|-------------------|----------------------|
+| Vector embeddings (abstract) | Physical locations (concrete) |
+| Similarity = cosine distance | Similarity = spatial distance |
+| Retrieval = search | Retrieval = navigation |
+| Static storage | Active simulation |
+| Token sequences | 3D coordinates |
+
+### Quick Start: Spatial Memory
+
+```gdscript
+# Store concepts at spatial locations
+AWR.memorize("machine_learning", Vector3(0, 0, 0))
+AWR.memorize("neural_networks", Vector3(50, 0, 0))
+AWR.memorize("deep_learning", Vector3(53, 0, 2))
+AWR.memorize("gradients", Vector3(50, 0, 5))
+
+# Find the path between concepts (THIS IS REASONING!)
+var path = AWR.spatial_reason("machine_learning", "neural_networks")
+print("Distance: ", path.distance)  # Semantic distance
+
+# Get concepts along the path (THE ANSWER!)
+var concepts = AWR.concepts_on_path(path)
+print("Relationship: ", concepts)  # ["deep_learning", "gradients", ...]
+
+# Semantic distance between concepts
+var dist = AWR.semantic_distance("machine_learning", "deep_learning")
+print("Relatedness: ", dist)  # Lower = more related
+```
+
+### Building a Memory Palace
+
+```gdscript
+# Auto-build from concept list
+var concepts: Array[Dictionary] = [
+    {"name": "machine_learning", "tags": ["ai", "data"]},
+    {"name": "neural_networks", "tags": ["ai", "deep_learning"]},
+    {"name": "statistics", "tags": ["math", "data"]},
+    {"name": "biology", "tags": ["science", "life"]},
+]
+AWR.build_palace(concepts)
+
+# Build linear palace (for sequences/stories)
+var steps: Array[String] = ["step1", "step2", "step3", "step4"]
+AWR.build_linear_palace(steps)
+
+# Build spiral palace (for exploration)
+var topics: Array[String] = ["intro", "basics", "advanced", "expert"]
+AWR.build_spiral_palace(topics)
+```
+
+### Spatial Memory API
+
+| Method | Description |
+|--------|-------------|
+| `memorize(concept, location, metadata)` | Store concept at location |
+| `recall(location)` | Retrieve by location |
+| `recall_by_concept(name)` | Retrieve by concept name |
+| `spatial_reason(from, to)` | Find path between concepts |
+| `concepts_on_path(path)` | Get concepts along path |
+| `semantic_distance(a, b)` | Physical distance = semantic distance |
+| `concept_neighbors(concept, radius)` | Find nearby concepts |
+| `build_palace(concepts)` | Auto-organize concepts into rooms |
+| `save_memory(path)` | Persist to file |
+| `load_memory(path)` | Load from file |
+
+---
 
 ## The 6 Primitives
 
