@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8speechbubble"]
+
+[ext_resource type="Script" path="res://scenes/fantasy_town/speech_bubble.gd" id="1_speech"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_label"]
+transparency = 1
+shading_mode = 0
+no_depth_test = true
+albedo_color = Color(1, 1, 1, 1)
+
+[node name="SpeechBubble" type="Node3D"]
+script = ExtResource("1_speech")
+
+[node name="Background" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = null
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+billboard = 1
+double_sided = true
+no_depth_test = true
+fixed_size = true
+pixel_size = 0.01
+text = ""
+outline_modulate = Color(0, 0, 0, 0.5)
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

@@ -1,0 +1,212 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8agent_panel_chat"]
+
+[ext_resource type="Script" path="res://scenes/fantasy_town/agent_panel.gd" id="1_panel_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.1, 0.1, 0.15, 0.95)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.4, 0.5, 1)
+
+[node name="AgentPanel" type="PanelContainer"]
+script = ExtResource("1_panel_script")
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 420.0
+offset_bottom = -20.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="AgentName" type="Label" parent="VBox/Header"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Agent Name"
+
+[node name="CloseButton" type="Button" parent="VBox/Header"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="BioSection" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="PersonalityLabel" type="Label" parent="VBox/BioSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Personality:"
+autowrap_mode = 3
+
+[node name="PersonalityText" type="TextEdit" parent="VBox/BioSection"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+readonly = true
+wrap_mode = 1
+
+[node name="MoodLabel" type="Label" parent="VBox/BioSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Mood:"
+
+[node name="MoodBars" type="HBoxContainer" parent="VBox/BioSection"]
+layout_mode = 2
+
+[node name="HappinessBar" type="ProgressBar" parent="VBox/BioSection/MoodBars"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 50.0
+show_percentage = false
+
+[node name="EnergyBar" type="ProgressBar" parent="VBox/BioSection/MoodBars"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 50.0
+show_percentage = false
+
+[node name="CuriosityBar" type="ProgressBar" parent="VBox/BioSection/MoodBars"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 50.0
+show_percentage = false
+
+[node name="HSeparator2" type="HSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="TodoSection" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TodoHeader" type="HBoxContainer" parent="VBox/TodoSection"]
+layout_mode = 2
+
+[node name="TodoLabel" type="Label" parent="VBox/TodoSection/TodoHeader"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Todo List:"
+
+[node name="AddTodoButton" type="Button" parent="VBox/TodoSection/TodoHeader"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "+"
+
+[node name="TodoInput" type="LineEdit" parent="VBox/TodoSection"]
+visible = false
+layout_mode = 2
+placeholder_text = "Enter new task..."
+
+[node name="TodoList" type="ItemList" parent="VBox/TodoSection"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="SkillsSection" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SkillsLabel" type="Label" parent="VBox/SkillsSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Skills:"
+
+[node name="SkillsList" type="Label" parent="VBox/SkillsSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "No skills learned yet"
+autowrap_mode = 2
+
+[node name="HSeparator4" type="HSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="ActionsSection" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ActionsLabel" type="Label" parent="VBox/ActionsSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Actions:"
+
+[node name="ActionsButtons" type="HBoxContainer" parent="VBox/ActionsSection"]
+layout_mode = 2
+
+[node name="WebSearchButton" type="Button" parent="VBox/ActionsSection/ActionsButtons"]
+layout_mode = 2
+text = "Web Search"
+
+[node name="BashButton" type="Button" parent="VBox/ActionsSection/ActionsButtons"]
+layout_mode = 2
+text = "Run Bash"
+
+[node name="VisitLibButton" type="Button" parent="VBox/ActionsSection/ActionsButtons"]
+layout_mode = 2
+text = "Visit Library"
+
+[node name="VisitUniButton" type="Button" parent="VBox/ActionsSection/ActionsButtons"]
+layout_mode = 2
+text = "Visit University"
+
+[node name="ActionInput" type="LineEdit" parent="VBox/ActionsSection"]
+visible = false
+layout_mode = 2
+placeholder_text = "Enter command/query..."
+
+[node name="HSeparator5" type="HSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="ChatSection" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="ChatLabel" type="Label" parent="VBox/ChatSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Chat:"
+
+[node name="ChatHistory" type="RichTextLabel" parent="VBox/ChatSection"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[i]Click on an agent to start chatting...[/i]"
+fit_content = true
+scroll_active = true
+
+[node name="InputSection" type="HBoxContainer" parent="VBox/ChatSection"]
+layout_mode = 2
+
+[node name="ChatInput" type="LineEdit" parent="VBox/ChatSection/InputSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Type a message..."
+
+[node name="SendButton" type="Button" parent="VBox/ChatSection/InputSection"]
+layout_mode = 2
+text = "Send"
+
+[node name="Status" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = ""
+horizontal_alignment = 1
