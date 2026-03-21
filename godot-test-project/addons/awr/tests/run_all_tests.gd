@@ -8,15 +8,19 @@ var _total_failed: int = 0
 
 func _init():
 	print("\n" + "=".repeat(70))
-	print("AWR COMPLETE TEST SUITE")
+	print("AWR COMPLETE TEST SUITE (v0.3 - AGI Patterns)")
 	print("=".repeat(70) + "\n")
 
 	var test_files = [
+		# Core tests
 		"res://addons/awr/tests/test_sim_loop.gd",
 		"res://addons/awr/tests/test_collision.gd",
 		"res://addons/awr/tests/test_causal_bus.gd",
 		"res://addons/awr/tests/test_perception.gd",
-		"res://addons/awr/tests/test_spatial_memory.gd"
+		"res://addons/awr/tests/test_spatial_memory.gd",
+		# New cognitive tests (v0.3)
+		"res://addons/awr/tests/test_cognitive.gd",
+		"res://addons/awr/tests/test_self_improvement.gd"
 	]
 
 	for test_file in test_files:

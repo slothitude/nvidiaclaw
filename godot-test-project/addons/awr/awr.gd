@@ -5,27 +5,64 @@
 ## Current AI paradigm: Thought → Action → Result (symbolic reasoning)
 ## AWR paradigm: State → Simulate → Evaluate → Commit (physics as reasoning)
 ##
+## v0.3: Now with complete AGI patterns from Meeseeks integration:
+##   - BDI Model (Beliefs-Desires-Intentions)
+##   - Global Workspace (attention/consciousness)
+##   - HTN Planner (hierarchical task decomposition)
+##   - Memory-Prediction (learning from errors)
+##   - Self-Improvement (performance tracking & strategy)
+##   - The Crypt (ancestral wisdom storage)
+##   - Delegation (hierarchical spawning)
+##
 ## This autoload provides the main API for AWR functionality.
 extends Node
 
-# Preload dependencies
+# Preload dependencies - Core
 const WorldStateScript = preload("res://addons/awr/core/world_state.gd")
 const SimLoopScript = preload("res://addons/awr/core/sim_loop.gd")
 const EvaluatorScript = preload("res://addons/awr/core/evaluator.gd")
 const CausalBusScript = preload("res://addons/awr/core/causal_bus.gd")
 const EventLogScript = preload("res://addons/awr/core/event_log.gd")
+
+# Preload dependencies - Physics
 const Collision2DScript = preload("res://addons/awr/physics/collision_2d.gd")
 const BroadphaseScript = preload("res://addons/awr/physics/broadphase.gd")
+
+# Preload dependencies - Perception
 const PerceptionBridgeScript = preload("res://addons/awr/perception/perception_bridge.gd")
 const VLMParserScript = preload("res://addons/awr/perception/vlm_parser.gd")
 const ViewportCaptureScript = preload("res://addons/awr/perception/viewport_capture.gd")
+
+# Preload dependencies - WorldGen
 const SceneGeneratorScript = preload("res://addons/awr/worldgen/scene_generator.gd")
+
+# Preload dependencies - RealBridge
 const RealBridgeScript = preload("res://addons/awr/realbridge/mqtt_client.gd")
+
+# Preload dependencies - Spatial Memory
 const SpatialMemoryScript = preload("res://addons/awr/spatial/spatial_memory.gd")
 const MemoryNodeScript = preload("res://addons/awr/spatial/memory_node.gd")
 const SpatialPathScript = preload("res://addons/awr/spatial/spatial_path.gd")
 const SpatialIndexScript = preload("res://addons/awr/spatial/spatial_index.gd")
 const PalaceBuilderScript = preload("res://addons/awr/spatial/palace_builder.gd")
+
+# Preload dependencies - Cognitive (AGI Patterns)
+const BDIModelScript = preload("res://addons/awr/cognitive/bdi_model.gd")
+const GlobalWorkspaceScript = preload("res://addons/awr/cognitive/global_workspace.gd")
+const HTNPlannerScript = preload("res://addons/awr/cognitive/htn_planner.gd")
+const HTNDomainScript = preload("res://addons/awr/cognitive/htn_domain.gd")
+const MemoryPredictionScript = preload("res://addons/awr/cognitive/memory_prediction.gd")
+const DelegationScript = preload("res://addons/awr/cognitive/delegation.gd")
+
+# Preload dependencies - Self-Improvement
+const PerformanceMonitorScript = preload("res://addons/awr/self_improvement/performance_monitor.gd")
+const PatternAnalyzerScript = preload("res://addons/awr/self_improvement/pattern_analyzer.gd")
+const StrategyGeneratorScript = preload("res://addons/awr/self_improvement/strategy_generator.gd")
+const ValidatorScript = preload("res://addons/awr/self_improvement/validator.gd")
+
+# Preload dependencies - Crypt
+const TheCryptScript = preload("res://addons/awr/crypt/crypt.gd")
+const BloodlineScript = preload("res://addons/awr/crypt/bloodline.gd")
 
 ## Core components
 var _world: Variant = null
@@ -36,6 +73,23 @@ var _perception: Variant = null
 var _real_bridge: Variant = null
 var _scene_gen: Variant = null
 var _spatial_memory: Variant = null
+
+## Cognitive components (AGI Patterns)
+var _bdi_model: Variant = null
+var _global_workspace: Variant = null
+var _htn_planner: Variant = null
+var _htn_domain: Variant = null
+var _memory_prediction: Variant = null
+var _delegation: Variant = null
+
+## Self-improvement components
+var _performance_monitor: Variant = null
+var _pattern_analyzer: Variant = null
+var _strategy_generator: Variant = null
+var _validator: Variant = null
+
+## Crypt components
+var _crypt: Variant = null
 
 ## Configuration
 var config: Dictionary = {
@@ -393,3 +447,222 @@ func save_memory(path: String) -> int:
 func load_memory(path: String) -> Variant:
 	_spatial_memory = SpatialMemoryScript.load_from(path)
 	return _spatial_memory
+
+# ============================================================
+# COGNITIVE API (AGI Patterns - v0.3)
+# ============================================================
+
+## Get or create the BDI model
+func get_bdi() -> Variant:
+	if _bdi_model == null:
+		_bdi_model = BDIModelScript.new()
+	return _bdi_model
+
+## Create BDI model from current world state
+func create_bdi_from_world(agent_id: String = "") -> Variant:
+	_bdi_model = BDIModelScript.from_world_state(_world, agent_id)
+	return _bdi_model
+
+## Get or create the global workspace
+func get_global_workspace() -> Variant:
+	if _global_workspace == null:
+		_global_workspace = GlobalWorkspaceScript.new()
+	return _global_workspace
+
+## Run attention competition in global workspace
+func compete_for_attention() -> Variant:
+	var gw = get_global_workspace()
+	gw.compete()
+	return gw.get_conscious_content()
+
+## Get or create the HTN planner with domain
+func get_htn_planner(domain_type: String = "navigation") -> Variant:
+	if _htn_planner == null or _htn_domain == null:
+		match domain_type:
+			"physics":
+				_htn_domain = HTNDomainScript.create_physics_domain()
+			_:
+				_htn_domain = HTNDomainScript.create_navigation_domain()
+		_htn_planner = HTNPlannerScript.new(_htn_domain)
+	return _htn_planner
+
+## Plan a task using HTN
+func htn_plan(task_name: String, world_state: Dictionary = {}) -> Array:
+	var planner = get_htn_planner()
+	return planner.plan(task_name, world_state)
+
+## Get or create the memory-prediction system
+func get_memory_prediction() -> Variant:
+	if _memory_prediction == null:
+		_memory_prediction = MemoryPredictionScript.new()
+	return _memory_prediction
+
+## Make a prediction and learn from errors
+func predict_and_learn(what: String, expected: Variant, actual: Variant, context: Dictionary = {}) -> float:
+	var mp = get_memory_prediction()
+	mp.predict_value(what, expected, 0.8, context)
+	mp.observe(what, actual, context)
+	mp.learn()
+	return mp.get_prediction_error()
+
+## Get or create the delegation system
+func get_delegation() -> Variant:
+	if _delegation == null:
+		_delegation = DelegationScript.new()
+	return _delegation
+
+## Check if should delegate a task
+func should_delegate(task: String, attempts: int = 0) -> bool:
+	return get_delegation().should_delegate(task, attempts)
+
+## Spawn a subtask via delegation
+func spawn_subtask(task: String) -> Dictionary:
+	return get_delegation().spawn_subtask(task)
+
+# ============================================================
+# SELF-IMPROVEMENT API (v0.3)
+# ============================================================
+
+## Get or create the performance monitor
+func get_performance_monitor() -> Variant:
+	if _performance_monitor == null:
+		_performance_monitor = PerformanceMonitorScript.new()
+	return _performance_monitor
+
+## Record a task outcome for tracking
+func record_task_outcome(task_id: String, success: bool, attempts: int = 1, tools: Array = []) -> void:
+	get_performance_monitor().record_task(task_id, success, attempts, tools)
+
+## Get or create the pattern analyzer
+func get_pattern_analyzer() -> Variant:
+	if _pattern_analyzer == null:
+		_pattern_analyzer = PatternAnalyzerScript.new(get_performance_monitor())
+	return _pattern_analyzer
+
+## Analyze patterns in task history
+func analyze_patterns() -> Dictionary:
+	return get_pattern_analyzer().analyze()
+
+## Get or create the strategy generator
+func get_strategy_generator() -> Variant:
+	if _strategy_generator == null:
+		_strategy_generator = StrategyGeneratorScript.new(get_pattern_analyzer())
+	return _strategy_generator
+
+## Generate improvement strategies
+func generate_strategies() -> Array:
+	return get_strategy_generator().generate()
+
+## Get or create the validator
+func get_validator() -> Variant:
+	if _validator == null:
+		_validator = ValidatorScript.new(get_performance_monitor())
+	return _validator
+
+## Validate a strategy
+func validate_strategy(strategy: Dictionary, test_func: Callable) -> Dictionary:
+	return get_validator().validate_strategy(strategy, test_func)
+
+# ============================================================
+# CRYPT API (Ancestral Wisdom - v0.3)
+# ============================================================
+
+## Get or create The Crypt
+func get_crypt() -> Variant:
+	if _crypt == null:
+		_crypt = TheCryptScript.new()
+	return _crypt
+
+## Entomb a completed session (store wisdom)
+func entomb_session(session_id: String, task: String, outcome: Dictionary) -> void:
+	get_crypt().entomb(session_id, task, outcome)
+
+## Inherit wisdom from a bloodline
+func inherit_wisdom(bloodline_name: String, context: Dictionary = {}) -> Array:
+	return get_crypt().inherit(bloodline_name, context)
+
+## Get guidance for a task from ancestral wisdom
+func get_ancestral_guidance(task: String, context: Dictionary = {}) -> Array:
+	return get_crypt().get_guidance(task, context)
+
+## Save The Crypt to file
+func save_crypt(path: String) -> int:
+	return get_crypt().save(path)
+
+## Load The Crypt from file
+func load_crypt(path: String) -> Variant:
+	_crypt = TheCryptScript.load_from(path)
+	return _crypt
+
+# ============================================================
+# INTEGRATED COGNITIVE CYCLE (v0.3)
+# ============================================================
+
+## Run a complete cognitive cycle with AGI patterns
+## 1. Update BDI from world state
+## 2. Compete for attention in global workspace
+## 3. Get ancestral guidance
+## 4. Plan with HTN if needed
+## 5. Simulate and evaluate
+## 6. Commit and learn
+func cognitive_cycle(viewport: Viewport, actions: Array, eval_func: Callable, task: String = "navigate") -> Dictionary:
+	var result: Dictionary = {}
+
+	# 1. Update BDI from world state
+	if _world != null:
+		create_bdi_from_world()
+		result["bdi_state"] = get_bdi().to_prompt_block()
+
+	# 2. Compete for attention
+	var gw = get_global_workspace()
+	if _bdi_model != null:
+		gw = GlobalWorkspaceScript.from_bdi(_bdi_model)
+	gw.compete()
+	result["conscious_content"] = gw.get_conscious_content()
+
+	# 3. Get ancestral guidance
+	var guidance = get_ancestral_guidance(task)
+	result["guidance"] = guidance
+
+	# 4. Plan with HTN if complex task
+	var plan = htn_plan(task)
+	result["htn_plan"] = plan
+
+	# 5. Simulate and evaluate
+	var sim_result = simulate(_world, actions, {"evaluator": eval_func})
+	result["simulation"] = sim_result
+
+	# 6. Commit and learn
+	if not sim_result.best_action.is_empty():
+		apply_action(sim_result.best_action)
+		record_action(sim_result.best_action, "cognitive_cycle")
+		record_task_outcome("cognitive_cycle_%d" % Time.get_ticks_msec(), true, 1, ["cognitive_cycle"])
+
+		# Learn from prediction
+		if _memory_prediction != null:
+			_memory_prediction.learn()
+
+	result["committed"] = not sim_result.best_action.is_empty()
+	return result
+
+## Get complete cognitive state as prompt block for AI
+func get_cognitive_state() -> String:
+	var lines: Array = []
+	lines.append("=== AWR COGNITIVE STATE ===")
+
+	if _bdi_model != null:
+		lines.append(_bdi_model.to_prompt_block())
+
+	if _global_workspace != null:
+		lines.append(_global_workspace.to_prompt_block())
+
+	if _delegation != null:
+		lines.append(_delegation.to_prompt_block())
+
+	if _crypt != null:
+		lines.append(_crypt.to_prompt_block())
+
+	if _memory_prediction != null:
+		lines.append(_memory_prediction.to_prompt_block())
+
+	return "\n".join(lines)
